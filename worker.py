@@ -14,13 +14,46 @@
    limitations under the License.
 """
 
-from uploader.configuration import conf
+
+from uploader import Config
+from uploader import Parser
+import paho.mqtt.client
 import requests
-import os
 
 
-with open(os.path.join(conf.data_cache_path, conf.input_file,), "r") as file:
-    for x in range(10):
-        print(file.readline())
+config = Config()
 
-resp = requests.post(conf.job_callback_url, json={conf.worker_instance: None})
+mqtt_client = paho.mqtt.client.Client(client_id=config.dep_instance, clean_session=False)
+mqtt_client.username_pw_set(username=config.usr, password=config.pw)
+
+mqtt_client.connect(
+    host=config.mqtt_server,
+    port=int(config.mqtt_port),
+    keepalive=int(config.mqtt_keepalive)
+)
+
+mqtt_client.loop_start()
+
+parsers = list()
+
+for i in range(0, len(config.inputs)):
+    parser = Parser(
+        ds_id=config.ds_platform_id,
+        srv_id=config.inputs[str(i)][config.service_id_field],
+        file=config.inputs[str(i)][config.source_file_field],
+        dc_path=config.data_cache_path,
+        delimiter=config.delimiter,
+        client=mqtt_client
+    )
+    parsers.append(parser)
+    parser.start()
+
+results = list()
+
+for parser in parsers:
+    parser.join()
+    results.append(parser.result)
+
+mqtt_client.disconnect()
+
+resp = requests.post(config.job_callback_url,json={config.dep_instance: results})
