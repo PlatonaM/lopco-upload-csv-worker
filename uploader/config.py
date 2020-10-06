@@ -24,13 +24,16 @@ import os
 class Config:
     def __init__(self):
         self.data_cache_path = "/data_cache"
-        self.logger_level = os.getenv("LOGGER_LEVEL", "info")
         self.dep_instance = os.getenv("DEP_INSTANCE")
         self.job_callback_url = os.getenv("JOB_CALLBACK_URL")
         self.ds_platform_id = os.getenv("DS_PLATFORM_ID")
         self.ds_platform_type_id = os.getenv("DS_PLATFORM_TYPE_ID")
+        self.mqtt_server = os.getenv("mqtt_server")
+        self.mqtt_port = os.getenv("mqtt_port")
+        self.mqtt_keepalive = os.getenv("mqtt_keepalive")
         self.usr = os.getenv("usr")
         self.pw = os.getenv("pw")
+        self.delimiter = os.getenv("delimiter")
         self.source_file_field = "source_file"
         self.service_id_field = "service_id"
         self.inputs = dict()
