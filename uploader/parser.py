@@ -59,7 +59,7 @@ class Parser(threading.Thread):
                     else:
                         data[fields[i]] = line[i]
                 self.__produce(json.dumps(data))
-        self.result = {"service_id": self.__srv_id, "data_points": self.__pub_count}
+        self.result = {"service_id": self.__srv_id, "sent_messages": self.__pub_count}
 
     def __produce(self, data: str):
         while True:
