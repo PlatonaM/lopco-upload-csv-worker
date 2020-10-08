@@ -37,6 +37,7 @@ class Parser(threading.Thread):
         self.result = None
 
     def run(self) -> None:
+        print("publishing messages for '{}'".format(self.__srv_id))
         with open(self.__file_path, "r") as file:
             fields = file.readline()
             fields = fields.strip()
@@ -60,6 +61,7 @@ class Parser(threading.Thread):
                         data[fields[i]] = line[i]
                 self.__produce(json.dumps(data))
         self.result = {"service_id": self.__srv_id, "sent_messages": self.__pub_count}
+        print("published '{}' messages for '{}'".format(self.__pub_count, self.__srv_id))
 
     def __produce(self, data: str):
         while True:
@@ -68,4 +70,5 @@ class Parser(threading.Thread):
             if msg_info.rc == paho.mqtt.client.MQTT_ERR_SUCCESS:
                 self.__pub_count += 1
                 break
+            print("failed to publish message '{}' for '{}'".format(self.__pub_count, self.__srv_id))
             time.sleep(5)
