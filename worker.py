@@ -25,6 +25,7 @@ config = Config()
 
 mqtt_client = paho.mqtt.client.Client(client_id=config.dep_instance, clean_session=False)
 mqtt_client.username_pw_set(username=config.usr, password=config.pw)
+mqtt_client.tls_set()
 
 mqtt_client.connect(
     host=config.mqtt_server,
