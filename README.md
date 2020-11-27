@@ -28,19 +28,5 @@
                 }
             ]
         },
-        "output": {
-            "type": "multiple",
-            "fields": [
-                {
-                    "name": "service_id",
-                    "media_type": "text/plain",
-                    "is_file": true
-                },
-                {
-                    "name": "sent_messages",
-                    "media_type": "text/plain",
-                    "is_file": false
-                }
-            ]
-        }
+        "output": null
     }
