@@ -34,7 +34,6 @@ class Parser(threading.Thread):
         self.__delimiter = delimiter
         self.__client = client
         self.__pub_count = 0
-        self.result = None
 
     def run(self) -> None:
         print("publishing messages for '{}'".format(self.__srv_id))
@@ -60,7 +59,6 @@ class Parser(threading.Thread):
                     else:
                         data[fields[i]] = line[i]
                 self.__produce(json.dumps(data))
-        self.result = {"service_id": self.__srv_id, "sent_messages": self.__pub_count}
         print("published '{}' messages for '{}'".format(self.__pub_count, self.__srv_id))
 
     def __produce(self, data: str):
