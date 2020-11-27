@@ -49,8 +49,6 @@ for i in range(0, len(config.inputs)):
     parsers.append(parser)
     parser.start()
 
-results = list()
-
 for parser in parsers:
     parser.join()
 
