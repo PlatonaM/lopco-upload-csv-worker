@@ -53,8 +53,7 @@ results = list()
 
 for parser in parsers:
     parser.join()
-    results.append(parser.result)
 
 mqtt_client.disconnect()
 
-resp = requests.post(config.job_callback_url,json={config.dep_instance: results})
+resp = requests.post(config.job_callback_url,json={config.dep_instance: None})
