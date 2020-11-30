@@ -2,7 +2,7 @@
 
     {
         "name": "Upload CSV to platform",
-        "image": "platonam/lopco-upload-csv-worker:dev",
+        "image": "platonam/lopco-upload-csv-worker:latest",
         "data_cache_path": "/data_cache",
         "description": "MQTT upload worker.",
         "configs": {
